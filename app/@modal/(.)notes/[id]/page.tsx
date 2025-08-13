@@ -1,8 +1,12 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import NotePreview from "@/components/NotePreview/NotePreview";
 
-export default function ModalPage({ params }: { params: { slug: string[] } }) {
-  const id = params.slug[params.slug.length - 1];
+export default function ModalPage() {
+  const pathname = usePathname();
+  const segments = pathname.split("/");
+  const id = segments[segments.length - 1];
+
   return <NotePreview id={id} />;
 }
