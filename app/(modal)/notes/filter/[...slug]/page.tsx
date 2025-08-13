@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { fetchNotes } from "@/lib/api";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import Notes from "@/app/(modal)/notes/filter/[...slug]/Notes.client";
@@ -22,8 +23,10 @@ export default async function FilteredNotesPage({ params }: Props) {
   queryClient.setQueryData(["notes", "", 1, cacheTagKey], data);
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <Notes initialData={data} initialTag={tag} />
-    </HydrationBoundary>
+    <Suspense>
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <Notes initialData={data} initialTag={tag} />
+      </HydrationBoundary>
+    </Suspense>
   );
 }
