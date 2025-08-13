@@ -2,7 +2,7 @@
 
 import NoteDetailsClient from "@/app/(modal)/notes/[id]/NoteDetails.client";
 
-export interface NotePreviewProps {
+interface NotePreviewProps {
   id: string;
 }
 
