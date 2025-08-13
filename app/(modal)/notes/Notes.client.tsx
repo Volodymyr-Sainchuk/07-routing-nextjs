@@ -11,7 +11,7 @@ import NoteList from "@/components/NoteList/NoteList";
 import NoteForm from "@/components/NoteForm/NoteForm";
 
 import { fetchNotes, type FetchNotesResponse } from "@/lib/api";
-import css from "../page.module.css";
+import css from "@/app/page.module.css";
 import { useSearchParams } from "next/navigation";
 
 type Props = {
