@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import css from "./TagsMenu.module.css";
 
 export interface Tag {
@@ -26,21 +27,21 @@ export default function TagsMenu({ tags, selectedTag, onSelectTag }: TagsMenuPro
 
   return (
     <div className={css.menuContainer}>
-      <button className={css.menuButton} onClick={toggleMenu}>
+      <button className={css.menuButton} onClick={toggleMenu} type="button">
         Notes ▾ ({selectedTag})
       </button>
       {isOpen && (
         <ul className={css.menuList}>
           <li className={css.menuItem}>
-            <button className={css.menuLink} onClick={() => handleSelect("All")} type="button">
+            <Link href={`/notes`} className={css.menuLink} onClick={() => handleSelect("All")}>
               All notes
-            </button>
+            </Link>
           </li>
           {tags.map((tag) => (
             <li key={tag.id} className={css.menuItem}>
-              <button className={css.menuLink} onClick={() => handleSelect(tag.name)} type="button">
+              <Link href={`/notes?tag=${tag.name}`} className={css.menuLink} onClick={() => handleSelect(tag.name)}>
                 {tag.name}
-              </button>
+              </Link>
             </li>
           ))}
         </ul>

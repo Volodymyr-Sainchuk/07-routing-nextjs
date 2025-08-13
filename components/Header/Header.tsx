@@ -1,12 +1,9 @@
 "use client";
-import Link from "next/link";
-import css from "./Header.module.css";
-import { useRouter, useSearchParams } from "next/navigation";
 
-interface Tag {
-  id: string;
-  name: string;
-}
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import css from "./Header.module.css";
+import TagsMenu, { Tag } from "../TagsMenu/TagsMenu";
 
 interface HeaderProps {
   tags: Tag[];
@@ -15,56 +12,37 @@ interface HeaderProps {
 export default function Header({ tags }: HeaderProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const selectedTag = searchParams.get("tag") || "all";
+  const selectedTag = searchParams.get("tag") || "All";
 
-  function handleSelectTag(tagId: string) {
+  function handleSelectTag(tagName: string) {
     const params = new URLSearchParams(searchParams.toString());
-    if (tagId === "all") {
+    if (tagName === "All") {
       params.delete("tag");
     } else {
-      params.set("tag", tagId);
+      // знаходимо ID по name
+      const tag = tags.find((t) => t.name === tagName);
+      if (tag) params.set("tag", tag.id);
     }
     router.push(`/notes/?${params.toString()}`);
   }
 
   return (
-    // <header>
-    //   {tags.map((tag) => (
-    //     <button
-    //       key={tag.id}
-    //       onClick={() => handleSelectTag(tag.id)}
-    //       style={{
-    //         fontWeight: selectedTag === tag.id ? "bold" : "normal",
-    //       }}
-    //     >
-    //       {tag.name}
-    //     </button>
-    //   ))}
-    // </header>
     <header className={css.header}>
       <Link href="/" aria-label="Home">
         NoteHub
       </Link>
-      <nav aria-label="Main Navigation">
+      <nav aria-label="Main Navigation" className={css.nav}>
         <ul className={css.navigation}>
           <li>
             <Link href="/">Home</Link>
           </li>
           <li>
-            {tags.map((tag) => (
-              <button
-                key={tag.id}
-                onClick={() => handleSelectTag(tag.id)}
-                style={{
-                  fontWeight: selectedTag === tag.id ? "bold" : "normal",
-                }}
-              >
-                {tag.name}
-              </button>
-            ))}
+            <TagsMenu tags={tags} selectedTag={selectedTag} onSelectTag={handleSelectTag} />
           </li>
         </ul>
       </nav>
     </header>
   );
 }
+
+// ?tag=Work
