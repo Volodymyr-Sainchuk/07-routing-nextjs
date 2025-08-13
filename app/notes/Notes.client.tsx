@@ -27,6 +27,7 @@ export default function Notes({ initialData }: Props) {
   const selectedTag = searchParams.get("tag") || "all";
 
   const isInitial = debouncedSearchTerm.trim() === "" && currentPage === 1;
+  console.log(initialData);
 
   const { data, isPending } = useQuery<FetchNotesResponse>({
     queryKey: ["notes", debouncedSearchTerm, currentPage, selectedTag],
