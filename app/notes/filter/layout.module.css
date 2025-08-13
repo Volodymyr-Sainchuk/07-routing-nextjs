@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 220px;
+  border-right: 1px solid #ddd;
+  padding: 1rem;
+  background-color: #f9f9f9;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+}
