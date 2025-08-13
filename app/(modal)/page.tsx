@@ -1,3 +1,5 @@
+"use client";
+
 import dynamic from "next/dynamic";
 
 const NotePreview = dynamic(() => import("@/components/NotePreview/NotePreview"), {
