@@ -1,6 +1,6 @@
-import dynamic from "next/dynamic";
+"use client";
 
-const NotePreview = dynamic(() => import("@/components/NotePreview/NotePreview"), { ssr: false });
+import NotePreview from "@/components/NotePreview/NotePreview";
 
 export default function ModalPage({ params }: { params: { slug: string[] } }) {
   const id = params.slug[params.slug.length - 1];
