@@ -8,5 +8,6 @@ const NotePreview = dynamic(() => import("@/components/NotePreview/NotePreview")
 
 export default function ModalPage({ params }: { params: { slug: string[] } }) {
   const id = params.slug[params.slug.length - 1];
+  console.log("🚀 ~ ModalPage ~ id:", id);
   return <NotePreview id={id} />;
 }

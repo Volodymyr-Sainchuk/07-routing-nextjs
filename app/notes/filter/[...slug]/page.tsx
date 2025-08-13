@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { fetchNotes } from "@/lib/api";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import Notes from "@/app/(modal)/notes/filter/[...slug]/Notes.client";
+import Notes from "@/app/notes/filter/[...slug]/Notes.client";
 
 type Props = {
   params: Promise<{ slug?: string[] }>;
@@ -14,8 +14,6 @@ export default async function FilteredNotesPage({ params }: Props) {
   const queryClient = new QueryClient();
 
   const queryTag = tag === "All" ? undefined : tag;
-
-  console.log("FilteredNotesPage tag:", tag, "queryTag:", queryTag);
 
   const data = await fetchNotes({ query: "", page: 1, perPage: 12, tag: queryTag });
 
