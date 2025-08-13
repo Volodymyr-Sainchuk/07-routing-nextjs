@@ -2,11 +2,11 @@ import { fetchNotes } from "@/lib/api";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import Notes from "@/app/notes/filter/[...slug]/Notes.client";
 
-type PageProps = {
+type Props = {
   params: { slug?: string[] };
 };
 
-export default async function FilteredNotesPage({ params }: PageProps) {
+export default async function FilteredNotesPage({ params }: Props) {
   const slug = params.slug || [];
   const tag = slug.length > 0 ? slug[0] : "All";
 
