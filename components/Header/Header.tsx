@@ -19,7 +19,6 @@ export default function Header({ tags }: HeaderProps) {
     if (tagName === "All") {
       params.delete("tag");
     } else {
-      // знаходимо ID по name
       const tag = tags.find((t) => t.name === tagName);
       if (tag) params.set("tag", tag.id);
     }
@@ -44,5 +43,3 @@ export default function Header({ tags }: HeaderProps) {
     </header>
   );
 }
-
-// ?tag=Work
