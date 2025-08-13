@@ -3,11 +3,11 @@ import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query
 import Notes from "@/app/notes/filter/[...slug]/Notes.client";
 
 type Props = {
-  params: { slug?: string[] };
+  params: Promise<{ slug?: string[] }>;
 };
 
 export default async function FilteredNotesPage({ params }: Props) {
-  const slug = params.slug || [];
+  const slug = (await params).slug || [];
   const tag = slug.length > 0 ? slug[0] : "All";
 
   const queryClient = new QueryClient();
