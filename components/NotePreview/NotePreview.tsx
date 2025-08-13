@@ -1,13 +1,11 @@
 "use client";
 
-// import { useRouter } from "next/navigation";
-// import Modal from "@/components/Modal/Modal";
 import NoteDetailsClient from "@/app/(modal)/notes/[id]/NoteDetails.client";
 
 export interface NotePreviewProps {
   id: string;
 }
 
-export default function NotePreview({ id }: { id: string }) {
+export default function NotePreview({ id }: NotePreviewProps) {
   return <NoteDetailsClient id={id} />;
 }
