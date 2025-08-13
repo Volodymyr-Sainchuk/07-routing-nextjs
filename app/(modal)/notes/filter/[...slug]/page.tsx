@@ -1,6 +1,6 @@
 import { fetchNotes } from "@/lib/api";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import Notes from "@/app/notes/filter/[...slug]/Notes.client";
+import Notes from "@/app/(modal)/notes/filter/[...slug]/Notes.client";
 
 type Props = {
   params: Promise<{ slug?: string[] }>;
