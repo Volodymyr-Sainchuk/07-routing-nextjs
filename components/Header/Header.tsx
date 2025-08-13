@@ -16,12 +16,14 @@ export default function Header({ tags }: HeaderProps) {
 
   function handleSelectTag(tagName: string) {
     const params = new URLSearchParams(searchParams.toString());
+
     if (tagName === "All") {
       params.delete("tag");
     } else {
       const tag = tags.find((t) => t.name === tagName);
       if (tag) params.set("tag", tag.id);
     }
+
     router.push(`/notes/?${params.toString()}`);
   }
 
@@ -30,6 +32,7 @@ export default function Header({ tags }: HeaderProps) {
       <Link href="/" aria-label="Home">
         NoteHub
       </Link>
+
       <nav aria-label="Main Navigation" className={css.nav}>
         <ul className={css.navigation}>
           <li>
