@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useDebounce } from "use-debounce";
 import { useQuery } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
 
 import Modal from "@/components/Modal/Modal";
 import Pagination from "@/components/Pagination/Pagination";
@@ -18,15 +19,24 @@ type Props = {
   initialTag?: string;
 };
 
-export default function Notes({ initialData }: Props) {
+export default function Notes({ initialData, initialTag }: Props) {
+  const params = useParams();
+  const tagFromUrl = params.slug?.[0] || initialTag || "All";
+
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm] = useDebounce(searchTerm, 500);
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data, isPending } = useQuery<FetchNotesResponse>({
-    queryKey: ["notes", debouncedSearchTerm, currentPage],
-    queryFn: () => fetchNotes({ query: debouncedSearchTerm, page: currentPage, perPage: 12 }),
+    queryKey: ["notes", tagFromUrl, debouncedSearchTerm, currentPage],
+    queryFn: () =>
+      fetchNotes({
+        query: debouncedSearchTerm,
+        page: currentPage,
+        perPage: 12,
+        tag: tagFromUrl !== "All" ? tagFromUrl : undefined,
+      }),
     placeholderData: initialData,
     refetchOnMount: false,
   });
@@ -52,7 +62,7 @@ export default function Notes({ initialData }: Props) {
       </header>
 
       {isPending && <p>Завантаження...</p>}
-      {data?.notes && data.notes.length > 0 && <NoteList notes={data.notes} currentTag="selectedTag" />}
+      {data?.notes && data.notes.length > 0 && <NoteList notes={data.notes} currentTag={tagFromUrl} />}
 
       {isModalOpen && (
         <Modal onClose={closeModal}>

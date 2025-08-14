@@ -33,13 +33,18 @@ export default function TagsMenu({ tags, selectedTag, onSelectTag }: TagsMenuPro
       {isOpen && (
         <ul className={css.menuList}>
           <li className={css.menuItem}>
-            <Link href={`/notes`} className={css.menuLink} onClick={() => handleSelect("All")}>
+            <Link href={`/notes/filter/All`} className={css.menuLink} onClick={() => handleSelect("All")}>
               All notes
             </Link>
           </li>
+
           {tags.map((tag) => (
             <li key={tag.id} className={css.menuItem}>
-              <Link href={`/notes?tag=${tag.name}`} className={css.menuLink} onClick={() => handleSelect(tag.name)}>
+              <Link
+                href={`/notes/filter/${encodeURIComponent(tag.name)}`}
+                className={css.menuLink}
+                onClick={() => handleSelect(tag.name)}
+              >
                 {tag.name}
               </Link>
             </li>

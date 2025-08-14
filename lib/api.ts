@@ -21,16 +21,16 @@ const axiosInstance = axios.create({
 });
 
 export async function fetchNotes(params: {
-  query: string;
-  page: number;
-  perPage: number;
+  query?: string;
+  page?: number;
+  perPage?: number;
   tag?: string;
 }): Promise<FetchNotesResponse> {
-  const { query, page, perPage, tag } = params;
+  const { query = "", page = 1, perPage = 10, tag } = params;
 
-  const res = await axiosInstance.get<FetchNotesResponse>("", {
+  const res = await axiosInstance.get<FetchNotesResponse>("/", {
     params: {
-      ...(query.trim() && { search: query }),
+      ...(query.trim() ? { search: query.trim() } : {}),
       ...(tag ? { tag } : {}),
       page,
       perPage,
