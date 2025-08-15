@@ -2,9 +2,7 @@
 
 import { useState } from "react";
 import { useDebounce } from "use-debounce";
-import { useQuery } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
-import { keepPreviousData } from "@tanstack/react-query";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
 
 import Modal from "@/components/Modal/Modal";
 import Pagination from "@/components/Pagination/Pagination";
@@ -20,23 +18,20 @@ type Props = {
   initialTag?: string;
 };
 
-export default function Notes({ initialData, initialTag }: Props) {
-  const params = useParams();
-  const tagFromUrl = params.slug?.[0] || initialTag || "All";
-
+export default function Notes({ initialData, initialTag = "All" }: Props) {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm] = useDebounce(searchTerm, 500);
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data, isPending } = useQuery<FetchNotesResponse>({
-    queryKey: ["notes", tagFromUrl, debouncedSearchTerm, currentPage],
+    queryKey: ["notes", initialTag, debouncedSearchTerm, currentPage],
     queryFn: () =>
       fetchNotes({
         query: debouncedSearchTerm,
         page: currentPage,
         perPage: 12,
-        tag: tagFromUrl !== "All" ? tagFromUrl : undefined,
+        tag: initialTag !== "All" ? initialTag : undefined,
       }),
     placeholderData: keepPreviousData,
     initialData,
@@ -48,9 +43,6 @@ export default function Notes({ initialData, initialTag }: Props) {
     setCurrentPage(1);
   };
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
-
   return (
     <div className={css.app}>
       <header className={css.toolbar}>
@@ -58,17 +50,17 @@ export default function Notes({ initialData, initialTag }: Props) {
         {data && data.totalPages > 1 && (
           <Pagination total={data.totalPages} page={currentPage} onChange={setCurrentPage} />
         )}
-        <button className={css.button} onClick={openModal}>
+        <button className={css.button} onClick={() => setIsModalOpen(true)}>
           Create note +
         </button>
       </header>
 
       {isPending && <p>Завантаження...</p>}
-      {data?.notes && data.notes.length > 0 && <NoteList notes={data.notes} currentTag={tagFromUrl} />}
+      {data?.notes?.length > 0 && <NoteList notes={data.notes} currentTag={initialTag} />}
 
       {isModalOpen && (
-        <Modal onClose={closeModal}>
-          <NoteForm onClose={closeModal} />
+        <Modal onClose={() => setIsModalOpen(false)}>
+          <NoteForm onClose={() => setIsModalOpen(false)} />
         </Modal>
       )}
     </div>
