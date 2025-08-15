@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useDebounce } from "use-debounce";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
+import { keepPreviousData } from "@tanstack/react-query";
 
 import Modal from "@/components/Modal/Modal";
 import Pagination from "@/components/Pagination/Pagination";
@@ -37,7 +38,8 @@ export default function Notes({ initialData, initialTag }: Props) {
         perPage: 12,
         tag: tagFromUrl !== "All" ? tagFromUrl : undefined,
       }),
-    placeholderData: initialData,
+    placeholderData: keepPreviousData,
+    initialData,
     refetchOnMount: false,
   });
 

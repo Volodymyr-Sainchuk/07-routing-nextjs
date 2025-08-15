@@ -78,3 +78,13 @@ export async function fetchNoteById(id: string): Promise<Note> {
   const response = await axiosInstance.get<Note>(`/${id}`);
   return response.data;
 }
+
+// export interface Tag {
+//   id: string;
+//   name: string;
+// }
+
+// export async function fetchTags(): Promise<Tag[]> {
+//   const res = await axiosInstance.get<Tag[]>("/tags");
+//   return res.data;
+// }

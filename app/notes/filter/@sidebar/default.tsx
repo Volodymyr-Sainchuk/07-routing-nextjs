@@ -1,7 +1,27 @@
-"use client";
+import Link from "next/link";
+import css from "@/app/notes/filter/@sidebar/SidebarNotes.module.css";
 
-import SidebarNotes from "@/components/SidebarNotes/SidebarNotes";
+async function fetchTags(): Promise<string[]> {
+  // Тут можна зробити await fetch("/api/tags") або з БД
+  return ["All", "Work", "Personal", "Todo", "Meeting", "Shopping"];
+}
 
-export default function SidebarDefault() {
-  return <SidebarNotes selectedTag="All" />;
+export default async function SidebarDefault() {
+  const tags = await fetchTags();
+
+  return (
+    <aside>
+      <nav>
+        <ul>
+          {tags.map((tag) => (
+            <li className={css.menuList} key={tag}>
+              <Link href={`/notes/filter/${encodeURIComponent(tag)}`} className={css.menuLink}>
+                {tag}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </aside>
+  );
 }
