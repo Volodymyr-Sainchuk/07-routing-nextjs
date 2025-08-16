@@ -35,7 +35,12 @@ const tags = [
   { id: Tags.Shopping, name: "Shopping" },
 ];
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+interface LayoutProps {
+  children: React.ReactNode;
+  modal: React.ReactNode; // обов’язково для Route Group @modal
+}
+
+export default function RootLayout({ children, modal }: LayoutProps) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
@@ -45,6 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </Suspense>
 
           {children}
+          {modal}
 
           <Footer />
         </TanStackProvider>
