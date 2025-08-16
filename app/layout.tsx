@@ -35,12 +35,7 @@ const tags = [
   { id: Tags.Shopping, name: "Shopping" },
 ];
 
-interface LayoutProps {
-  children: React.ReactNode;
-  modal?: React.ReactNode;
-}
-
-export default function RootLayout({ children, modal }: LayoutProps) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
@@ -50,7 +45,7 @@ export default function RootLayout({ children, modal }: LayoutProps) {
           </Suspense>
 
           {children}
-          {modal}
+
           <Footer />
         </TanStackProvider>
       </body>
