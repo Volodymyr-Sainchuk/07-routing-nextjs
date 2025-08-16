@@ -2,7 +2,6 @@ import Link from "next/link";
 import css from "@/app/notes/filter/@sidebar/SidebarNotes.module.css";
 
 async function fetchTags(): Promise<string[]> {
-  // Тут можна зробити await fetch("/api/tags") або з БД
   return ["All", "Work", "Personal", "Todo", "Meeting", "Shopping"];
 }
 
