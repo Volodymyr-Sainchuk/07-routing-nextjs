@@ -1,4 +1,6 @@
-import { useEffect } from "react";
+"use client";
+
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import css from "./Modal.module.css";
 
@@ -8,7 +10,11 @@ interface ModalProps {
 }
 
 export default function Modal({ onClose, children }: ModalProps) {
-  const modalRoot = document.body!;
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -22,10 +28,12 @@ export default function Modal({ onClose, children }: ModalProps) {
     if (e.target === e.currentTarget) onClose();
   };
 
+  if (!mounted) return null;
+
   return createPortal(
     <div className={css.backdrop} role="dialog" aria-modal="true" onClick={handleBackdropClick}>
       <div className={css.modal}>{children}</div>
     </div>,
-    modalRoot
+    document.body
   );
 }
