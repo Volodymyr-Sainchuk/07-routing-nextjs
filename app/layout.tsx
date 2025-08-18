@@ -37,7 +37,7 @@ const tags = [
 
 interface LayoutProps {
   children: React.ReactNode;
-  modal: React.ReactNode; // обов’язково для Route Group @modal
+  modal: React.ReactNode;
 }
 
 export default function RootLayout({ children, modal }: LayoutProps) {

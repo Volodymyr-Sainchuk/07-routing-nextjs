@@ -10,7 +10,7 @@ export interface NoteListProps {
   currentTag: string;
 }
 
-export default function NoteList({ notes, currentTag }: NoteListProps) {
+export default function NoteList({ notes }: NoteListProps) {
   const deleteMutation = useDeleteNote();
   const queryClient = useQueryClient();
 
@@ -36,7 +36,9 @@ export default function NoteList({ notes, currentTag }: NoteListProps) {
           <p className={css.content}>{note.content}</p>
           <div className={css.footer}>
             <span className={css.tag}>{note.tag}</span>
-            <Link href={`/notes/filter/${currentTag}/@modal/${note.id}`}>View details</Link>
+            <Link className={css.link} href={`/notes/${note.id}`} scroll={false}>
+              View details
+            </Link>
             <button onClick={() => handleDelete(note)}>Delete</button>
           </div>
         </li>
